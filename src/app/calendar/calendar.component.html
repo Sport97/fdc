@@ -1,1 +1,25 @@
-<p>calendar works!</p>
+<div class="container">
+  <h2 class="mb-3">
+    {{ monthName }}
+    {{ year }}
+  </h2>
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead class="table-light">
+        <tr>
+          <th *ngFor="let day of weekDays">
+            {{ day }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of calendar">
+          <td *ngFor="let date of week">
+            <span *ngIf="date">
+              {{ date }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
