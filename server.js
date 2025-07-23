@@ -52,9 +52,9 @@ mongoose
     // console.log("SequenceGenerator initialized.");
 
     app.use("/", index);
-    // app.use("/calendar", calendarRoutes);
+    app.use("/calendar", calendarRoutes);
     app.use("/dinners", dinnerRoutes);
-    // app.use("/shopping", shoppingRoutes);
+    app.use("/shopping", shoppingRoutes);
 
     server.listen(port, () => {
       console.log("API running on localhost: " + port);

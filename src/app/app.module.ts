@@ -9,6 +9,7 @@ import { DinnersComponent } from './dinners/dinners.component';
 import { ShoppingComponent } from './shopping/shopping.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { HttpClientModule } from '@angular/common/http';
+import { ShoppingEditComponent } from './shopping/shopping-edit/shopping-edit.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     DinnersComponent,
     ShoppingComponent,
     DropdownDirective,
+    ShoppingEditComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [],

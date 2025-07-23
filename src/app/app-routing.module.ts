@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DinnersComponent } from './dinners/dinners.component';
 import { ShoppingComponent } from './shopping/shopping.component';
+import { ShoppingEditComponent } from './shopping/shopping-edit/shopping-edit.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -24,11 +25,10 @@ const appRoutes: Routes = [
   {
     path: 'shopping',
     component: ShoppingComponent,
-    //   children: [
-    //     { path: 'new', component: ShoppingEditComponent },
-    //     { path: ':id', component: ShoppingDetailComponent },
-    //     { path: ':id/edit', component: ShoppingEditComponent },
-    //   ],
+    children: [
+      { path: 'new', component: ShoppingEditComponent },
+      { path: ':id/edit', component: ShoppingEditComponent },
+    ],
   },
 ];
 

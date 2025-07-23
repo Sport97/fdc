@@ -7,16 +7,23 @@
     <table class="table table-bordered text-center">
       <thead class="table-light">
         <tr>
-          <th *ngFor="let day of weekDays">
-            {{ day }}
+          <th *ngFor="let day of weekDays; let i = index">
+            {{ day }}<br />
+            <small *ngIf="hostsByWeekday[i]">
+              {{ hostsByWeekday[i] }}</small>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let week of calendar">
           <td *ngFor="let date of week">
-            <span *ngIf="date">
-              {{ date }}</span>
+            <div *ngIf="date.day">
+              <strong>
+                {{ date.day }}</strong><br />
+              <span *ngIf="date.food">
+                {{ date.food }}</span><br />
+              <span *ngIf="date.isSaturday">Missionaries</span>
+            </div>
           </td>
         </tr>
       </tbody>
