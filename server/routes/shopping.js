@@ -28,48 +28,40 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  try {
-    const { _id } = req.params;
-    const { name } = req.body;
-    const { amount } = req.body;
-
-    const shopping = await shoppingModel.findById(_id);
-    if (!shopping) {
-      return res.status(404).json({ message: "Shopping entry not found" });
-    }
-
-    const item = shopping.items._id(item);
-    if (!item) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    item.name = name;
-    item.amount = amount;
-    await shopping.save();
-
-    res.status(200).json({ message: "Item updated", item });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
+router.put("/:id", (req, res) => {
+  console.log("Request body:", req.body);
+  shoppingModel
+    .findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        amount: req.body.amount,
+      },
+      { new: true }
+    )
+    .then((updatedItem) => {
+      if (!updatedItem) {
+        return res.status(404).json({ message: "Shopping entry not found" });
+      }
+      res.status(200).json(updatedItem);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Error updating item", error: err });
+    });
 });
 
-router.delete("/:entryId/items/:itemId", async (req, res) => {
-  try {
-    const entry = await shoppingModel.findById(req.params.entryId);
-    if (!entry) return res.status(404).json({ message: "Entry not found" });
-
-    entry.items = entry.items.filter(
-      (item) => item._id.toString() !== req.params.itemId
-    );
-    await entry.save();
-
-    res.status(200).json({ message: "Item deleted" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
+router.delete("/:id", (req, res) => {
+  shoppingModel
+    .findByIdAndDelete(req.params.id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({ message: "Shopping entry not found" });
+      }
+      res.status(200).json({ message: "Item deleted successfully" });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Deleting item failed", error: err });
+    });
 });
 
 module.exports = router;

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Item } from './shopping.model';
 import { ShoppingService } from './shopping.service';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'fdc-shopping',
@@ -29,10 +29,12 @@ export class ShoppingComponent implements OnInit, OnDestroy {
     );
   }
 
-  onEditItems(index: number) {
+  onEditItems(index: any) {
+    const item = this.items[index];
+    const id = item._id;
+
     this.slService.startedEditing.next(index);
-    this.slService.getItem(index);
-    this.router.navigate([index, 'edit'], { relativeTo: this.route });
+    this.router.navigate([id], { relativeTo: this.route });
   }
 
   ngOnDestroy(): void {

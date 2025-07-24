@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DinnersComponent } from './dinners/dinners.component';
 import { ShoppingComponent } from './shopping/shopping.component';
 import { ShoppingEditComponent } from './shopping/shopping-edit/shopping-edit.component';
+import { DinnerEditComponent } from './dinners/dinner-edit/dinner-edit.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -16,18 +16,17 @@ const appRoutes: Routes = [
   {
     path: 'dinners',
     component: DinnersComponent,
-    //   children: [
-    //     { path: 'new', component: DinnerEditComponent },
-    //     { path: ':id', component: DinnerDetailComponent },
-    //     { path: ':id/edit', component: DinnerEditComponent },
-    //   ],
+    children: [
+      { path: 'new', component: DinnerEditComponent },
+      { path: ':id', component: DinnerEditComponent },
+    ],
   },
   {
     path: 'shopping',
     component: ShoppingComponent,
     children: [
       { path: 'new', component: ShoppingEditComponent },
-      { path: ':id/edit', component: ShoppingEditComponent },
+      { path: ':id', component: ShoppingEditComponent },
     ],
   },
 ];

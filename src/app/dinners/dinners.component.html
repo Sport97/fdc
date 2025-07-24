@@ -1,29 +1,31 @@
-<div class="container mt-3">
-  <h2>Dinners</h2>
-  <table class="table table-striped table-bordered">
-    <thead class="table-light">
-      <tr>
-        <th>Date</th>
-        <th>Food</th>
-        <th>Host</th>
-        <th>Guest</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let dinner of dinners">
-        <td>
-          {{ dinner.date }}
-        </td>
-        <td>
-          {{ dinner.food }}
-        </td>
-        <td>
-          {{ dinner.host }}
-        </td>
-        <td>
-          {{ dinner.guest }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="row">
+  <h1>Dinners</h1>
+  <div class="col-12">
+    <fdc-dinner-edit></fdc-dinner-edit>
+    <hr />
+    <div class="row fw-bold border-bottom pb-2 mb-2 mx-0">
+      <div class="col-md-3">Date</div>
+      <div class="col-md-3">Food</div>
+      <div class="col-md-3">Host</div>
+      <div class="col-md-3">Guest</div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item mb-3" style="cursor: pointer;" *ngFor="let dinner of dinners" (click)="onEditDinner(dinner._id)">
+        <div class="row mx-0">
+          <div class="col-md-3">
+            {{ dinner.date }}
+          </div>
+          <div class="col-md-3">
+            {{ dinner.food }}
+          </div>
+          <div class="col-md-3">
+            {{ dinner.host }}
+          </div>
+          <div class="col-md-3">
+            {{ dinner.guest }}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

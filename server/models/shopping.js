@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const shoppingSchema = new mongoose.Schema(
   {
-    name: String,
-    ammount: Number,
+    name: { type: String, required: true },
+    amount: { type: Number, required: true },
   },
   {
     collection: "shopping",

@@ -1,16 +1,16 @@
 var express = require("express");
 var router = express.Router();
-const calendarModel = require("../models/calendar");
+const dinnerModel = require("../models/dinner");
 
 router.get("/", (req, res, next) => {
-  calendarModel
+  dinnerModel
     .find()
-    .then((calendarData) => {
-      res.status(200).json(calendarData);
+    .then((dinnerData) => {
+      res.status(200).json(dinnerData);
     })
     .catch((err) => {
       res.status(500).json({
-        error: err.message || "An error occurred while fetching calendar.",
+        error: err.message || "An error occurred while fetching dinners.",
       });
     });
 });

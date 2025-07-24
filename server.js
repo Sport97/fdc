@@ -7,7 +7,6 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var index = require("./server/routes/app");
 var app = express();
-// var sequenceGenerator = require("./server/routes/sequenceGenerator");
 
 const port = process.env.PORT || "3000";
 const server = http.createServer(app);
@@ -17,6 +16,7 @@ const shoppingRoutes = require("./server/routes/shopping");
 
 app.set("port", port);
 
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -37,19 +37,11 @@ app.use((req, res, next) => {
   );
   next();
 });
-// app.use(express.static(path.join(__dirname, "dist/cms/browser")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "dist/cms/browser/index.html"));
-// });
 
 mongoose
   .connect("mongodb://localhost:27017/fdc", {})
   .then(async () => {
     console.log("Connected to database");
-
-    // await sequenceGenerator.init();
-    // console.log("SequenceGenerator initialized.");
 
     app.use("/", index);
     app.use("/calendar", calendarRoutes);

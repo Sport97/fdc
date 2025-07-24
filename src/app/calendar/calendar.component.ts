@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService } from './calendar.service';
-import { Calendar } from './calendar.model';
+import { Dinner } from '../dinners/dinner.model';
 
 interface CalendarCell {
   day: number | null;
@@ -23,7 +23,7 @@ export class CalendarComponent implements OnInit {
   month: number = new Date().getMonth();
   monthName: string = '';
 
-  backendEntries: Calendar[] = [];
+  backendEntries: Dinner[] = [];
 
   constructor(private calendarService: CalendarService) {}
 

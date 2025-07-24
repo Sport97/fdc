@@ -3,6 +3,7 @@ import { Item } from '../shopping.model';
 import { ShoppingService } from '../shopping.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'fdc-shopping-edit',
@@ -14,14 +15,18 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('f') slForm!: NgForm;
   subscription!: Subscription;
   editMode = false;
-  editedItemIndex!: number;
+  editedItemIndex!: any;
   editedItem!: Item;
 
-  constructor(private slService: ShoppingService) {}
+  constructor(
+    private slService: ShoppingService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.slService.startedEditing.subscribe(
-      (index: number) => {
+      (index: any) => {
         this.editedItemIndex = index;
         this.editMode = true;
         this.editedItem = this.slService.getItem(index);
@@ -35,19 +40,25 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newItem = new Item(value.name, value.amount);
+    const newItem = this.editMode
+      ? new Item(value.name, +value.amount, this.editedItem._id)
+      : new Item(value.name, value.amount);
     if (this.editMode) {
-      this.slService.updateItems(this.editedItemIndex, newItem);
+      this.slService.updateItem(this.editedItemIndex, newItem);
+      this.router.navigate(['/shopping']);
     } else {
       this.slService.addItem(newItem);
+      this.router.navigate(['/shopping']);
     }
     this.editMode = false;
     form.reset();
+    this.router.navigate(['/shopping']);
   }
 
   onClear() {
     this.slForm.reset();
     this.editMode = false;
+    this.router.navigate(['/shopping']);
   }
 
   onDelete() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Calendar } from './calendar.model';
+import { Dinner } from '../dinners/dinner.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class CalendarService {
 
   constructor(private http: HttpClient) {}
 
-  getCalendarData(): Observable<Calendar[]> {
-    return this.http.get<Calendar[]>(this.apiUrl);
+  getCalendarData(): Observable<Dinner[]> {
+    return this.http.get<Dinner[]>(this.apiUrl);
   }
 }

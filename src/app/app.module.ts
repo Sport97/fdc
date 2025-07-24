@@ -7,9 +7,9 @@ import { HeaderComponent } from './header/header.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DinnersComponent } from './dinners/dinners.component';
 import { ShoppingComponent } from './shopping/shopping.component';
-import { DropdownDirective } from './shared/dropdown.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { ShoppingEditComponent } from './shopping/shopping-edit/shopping-edit.component';
+import { DinnerEditComponent } from './dinners/dinner-edit/dinner-edit.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,8 @@ import { ShoppingEditComponent } from './shopping/shopping-edit/shopping-edit.co
     CalendarComponent,
     DinnersComponent,
     ShoppingComponent,
-    DropdownDirective,
     ShoppingEditComponent,
+    DinnerEditComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [],

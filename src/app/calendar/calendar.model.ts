@@ -1,6 +1,6 @@
 export interface Calendar {
-  food: string;
   date: string;
+  food: string;
   host: string;
   guest: string;
 }

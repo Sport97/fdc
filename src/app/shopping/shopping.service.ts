@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class ShoppingService {
   itemsChanged = new Subject<Item[]>();
-  startedEditing = new Subject<number>();
+  startedEditing = new Subject<any>();
 
   private items: Item[] = [];
   private apiUrl = 'http://localhost:3000/shopping';
@@ -19,14 +19,20 @@ export class ShoppingService {
   getItems() {
     this.http
       .get<Item[]>(this.apiUrl)
-      .pipe(map((items) => items.map((i) => new Item(i.name, i.amount))))
+      .pipe(
+        map((items) => items.map((i: any) => new Item(i.name, i.amount, i._id)))
+      )
       .subscribe((items) => {
         this.items = items;
         this.itemsChanged.next(this.items.slice());
       });
   }
 
-  getItem(index: number) {
+  getItemById(_id: string): Item | null {
+    return this.items.find((item) => item._id === _id) || null;
+  }
+
+  getItem(index: any) {
     return this.items[index];
   }
 
@@ -34,32 +40,41 @@ export class ShoppingService {
     this.http
       .post<{ message: string; item: any }>(this.apiUrl, item)
       .subscribe((response) => {
-        const newItem = new Item(response.item.name, response.item.amount);
+        const newItem = new Item(
+          response.item.name,
+          response.item.amount,
+          response.item._id
+        );
         this.items.push(newItem);
         this.itemsChanged.next(this.items.slice());
       });
   }
 
-  addItems(items: Item[]) {
+  updateItem(index: any, newItem: any) {
+    const itemId = this.items[index]._id;
+    if (!itemId) {
+      console.error('Cannot update item without _id');
+      return;
+    }
     this.http
-      .post<{ message: string; item: any }>(this.apiUrl, items)
-      .subscribe((response) => {
-        const newItem = new Item(response.item.name, response.item.amount);
-        this.items.push(newItem);
+      .put<Item>(
+        `${this.apiUrl}/${itemId}`,
+        {
+          name: newItem.name,
+          amount: +newItem.amount,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+      .subscribe((updatedItem) => {
+        this.items[index] = updatedItem;
         this.itemsChanged.next(this.items.slice());
       });
   }
 
-  updateItems(index: number, newItem: Item) {
-    const itemId = this.items[index]['_id'];
-    this.http.put(`${this.apiUrl}/${itemId}`, newItem).subscribe(() => {
-      this.items[index] = newItem;
-      this.itemsChanged.next(this.items.slice());
-    });
-  }
-
-  deleteItem(index: number) {
-    const itemId = this.items[index]['_id'];
+  deleteItem(index: any) {
+    const itemId = this.items[index]._id;
     this.http.delete(`${this.apiUrl}/${itemId}`).subscribe(() => {
       this.items.splice(index, 1);
       this.itemsChanged.next(this.items.slice());

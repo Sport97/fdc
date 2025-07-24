@@ -6,9 +6,9 @@ router.get("/", function (req, res, next) {
   res.json({
     message: "FDC API",
     available_routes: {
-      "/calendar": "Documents Route",
-      "/documents": "Messages Route",
-      "/shopping": "Contacts Route",
+      "http://localhost:3000/calendar": "Calednar Route",
+      "http://localhost:3000/dinners": "Dinners Route",
+      "http://localhost:3000/shopping": "Shopping Route",
     },
   });
 });
