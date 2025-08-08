@@ -5,6 +5,8 @@ import { Dinner } from '../dinners/dinner.model';
 interface CalendarCell {
   day: number | null;
   food?: string;
+  host?: string;
+  guest?: string;
   isSaturday?: boolean;
 }
 
@@ -55,13 +57,15 @@ export class CalendarComponent implements OnInit {
       const weekday = currentDate.getDay();
       const isSaturday = weekday === 6;
 
-      if (entry && !this.hostsByWeekday[weekday]) {
-        this.hostsByWeekday[weekday] = entry.host;
-      }
+      // if (entry && !this.hostsByWeekday[weekday]) {
+      //   this.hostsByWeekday[weekday] = entry.host;
+      // }
 
       week.push({
         day,
         food: entry?.food,
+        host: entry?.host,
+        guest: entry?.guest,
         isSaturday,
       });
 

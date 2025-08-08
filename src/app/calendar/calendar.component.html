@@ -9,8 +9,8 @@
         <tr>
           <th *ngFor="let day of weekDays; let i = index">
             {{ day }}<br />
-            <small *ngIf="hostsByWeekday[i]">
-              {{ hostsByWeekday[i] }}</small>
+            <!-- <small *ngIf="hostsByWeekday[i]">
+              {{ hostsByWeekday[i] }}</small> -->
           </th>
         </tr>
       </thead>
@@ -22,7 +22,11 @@
                 {{ date.day }}</strong><br />
               <span *ngIf="date.food">
                 {{ date.food }}</span><br />
-              <span *ngIf="date.isSaturday">Missionaries</span>
+              <span *ngIf="date.host">
+                {{ date.host }}</span><br />
+              <span *ngIf="date.guest">
+                {{ date.guest }}</span><br />
+              <!-- <span *ngIf="date.isSaturday">Missionaries</span> -->
             </div>
           </td>
         </tr>
